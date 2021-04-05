@@ -531,3 +531,56 @@ iex> ExMon.make_move(:thunderbolt)
 ---------------------------------------
 :ok
 ```
+### 9. Creating the healing action
+* In the __ex_mon.ex__ file
+  - In the __def do_move()__
+    - [  ] Change __"performs healing"__ to Actions.heal()
+* In the __actions.ex__ file
+  - [  ] Create __def heal()__
+    - [  ] If it's the player, heals the player
+    - [  ] In case it is the computer, heals the computer
+* Create __the game/actions/heal.ex__
+  - [  ] Create __defp calculate_total_life(life)__
+    - [  ] Take a random number between 18 and 25
+  - [  ] Create __defp set_life(life, player)__
+    - [  ] If life > 100: __update_player_life(player, 100)__
+    - [  ] If life < 100: __update_player_life(player, life)__
+  - [  ] Create __update_player_life(player, life)__
+    - [  ] fetch player |> update life |> update game
+  - [  ] Create __update_game(player_data, player, life)__
+    - [  ] Use Status.print_move_message()
+* In the __status.ex__ file
+  - [  ] Create print_move_message(player, :heal, life)
+```bash
+iex> ExMon.make_move(:heal)
+
+===== The player healled itself to 98 life points. =====
+
+
+===== It is the computer turn =====
+
+%{
+  computer: %ExMon.Player{
+    life: 65,
+    moves: %{
+      move_average: :claw_slash,
+      move_heal: :heal,
+      move_random: :fire_spin
+    },
+    name: "Charizard"
+  },
+  player: %ExMon.Player{
+    life: 98,
+    moves: %{
+      move_average: :tail_whip,
+      move_heal: :heal,
+      move_random: :thunderbolt
+    },
+    name: "Pikachu"
+  },
+  status: :continue,
+  turn: :computer
+}
+---------------------------------------
+:ok
+```
