@@ -366,7 +366,7 @@ iex> ExMon.make_move(:thunderbolt)
 }
 ```
 ### 6. Updating the game state: Elixir is immutable, so we always need to reassign the values
-* [  ] In the __game.ex__ file
+* In the __game.ex__ file
   - [  ] Create the __def update(state)__
     - [  ] Agent.update(__MODULE __, fn _ -> state end)
 
@@ -450,5 +450,84 @@ iex> ExMon.make_move(:thunderbolt)
 
 ===== The Player attacked the computer causing 24 damage. =====
 
+:ok
+```
+### 8. Changing the game state
+* Remembering the state map:
+```elixir
+%{
+  computer: computer,
+  human: human,
+  turn: :human, # or :computer
+  status: :started # or :continue, :game_over
+}
+```
+* In the __game.ex__ file
+  - [  ] In the __def update(state)__
+    - [  ] change __state__ to __update_game_status(state)__
+  - [  ] Create the __defp update_game_status()__
+    - [  ] alias ExMon.Player
+    - [  ] The Game is over
+      - [  ] Using Pattern Matching as parameter
+        - %{
+            human: %Player{life_poins: human_life},
+            computer: %Player{life_points: computer_life}
+          } = state
+      - [  ] when player_life == 0 or computer_life == 0
+      - [  ] Update game state using __Map.put()__
+    - [  ] The game is not over
+      - [  ] Using state as parameter
+      - [  ] Update __:status__ with __:continue__
+      - [  ] Update Turn
+        - [  ] Create __defp update_turn()__ 2X
+          - [  ] Using Pattern Matching as parameter
+            - %{turn: :player} = state
+              - [  ] Update __:turn__ with __:computer__
+            - %{turn: :computer} = state
+              - [  ] Update __:turn__ with __:player__
+* In the __game/status.ex__
+  - In the __def print_round_message()__
+    - [  ] As parameter put %{status: :started} = info
+
+  - [  ] Create another __def print_round_message(%{status: :continue, turn: player} = info)__
+    - [  ] Print whose turn it is to play
+    - [  ] IO.inspect(info)
+  - [  ] Create another __def print_round_message__ to :game_over
+
+* In the __ex_mon.ex__ file
+  - In the __defp do_move({:ok, move})
+    - [  ] Use Status.print_round_message(__Game.info()__)
+
+```bash
+iex> ExMon.make_move(:thunderbolt)
+
+===== The Player attacked the computer causing 23 damage. =====
+
+
+===== It is computer turn =====
+
+%{
+  computer: %ExMon.Player{
+    life: 77,
+    moves: %{
+      move_average: :claw_slash,
+      move_heal: :heal,
+      move_random: :fire_spin
+    },
+    name: "Charizard"
+  },
+  player: %ExMon.Player{
+    life: 100,
+    moves: %{
+      move_average: :thunderbolt,
+      move_heal: :heal,
+      move_random: :tail_whip
+    },
+    name: "Pikachu"
+  },
+  status: :continue,
+  turn: :computer
+}
+---------------------------------------
 :ok
 ```
