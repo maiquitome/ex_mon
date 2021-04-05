@@ -48,10 +48,10 @@
 * [  ] Create the __ExMon.Player__ module
 * [  ] Create the player struct
   * The player must have:
-    - :name
-    - :moves
+    - name
+    - moves
       - average_attack, random_attack, healing_power
-    - :life_points
+    - life_points
 * [  ] Put the __list of keys__ in a __module attribute "as constant" @required_keys__
 * [  ] Make __all keys__ mandatory 👉 @enforce_keys
 * [  ] Put the constant value 100 from the life_points key into a __module attribute @max_life__
